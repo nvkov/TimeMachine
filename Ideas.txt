@@ -1,0 +1,26 @@
+1. Look for seasonality:
+- Seasonality in return ratio on the product and customer level
+- Week seasonality
+- Month seasonality
+- Check all seasonality on product groups
+
+2. Look for Process shifts:
+- KS test for datapartitioning
+- cutting last 3 months of dataset and assessing
+
+3. Create time related variables:
+- Week day and weekend customer
+- Average time between orders
+- Average time between returns
+- Distance between this and last order
+- Age of customer
+- First date for customer
+- Frequency of orders in the last 2 weeks
+- returns in last month
+- preferred week day for ordering
+- preferred week day for returning
+- averge_number_of_items_bought_on_the_day
+
+4. Survival analysis:
+- on number of items bought
+- on the time passed 
