@@ -10,16 +10,16 @@
 
 3. Create time related variables:
 - Week day and weekend customer
-- Average time between orders
-- Average time between returns
-- Distance between this and last order
+- MARTA: Average time between orders
+- MARTA: Average time between returns
+- MARTA: Distance between this and last order
 - Age of customer
-- First date for customer
+- DONE: First date for customer
 - Frequency of orders in the last 2 weeks
 - returns in last month
 - preferred week day for ordering
 - preferred week day for returning
-- averge_number_of_items_bought_on_the_day
+- DONE: averge_number_of_items_bought_on_the_day
 
 4. Survival analysis:
 - on number of items bought
