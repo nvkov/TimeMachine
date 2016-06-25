@@ -23,6 +23,9 @@
 =======
 - preferred week day for ordering
 - preferred week day for returning
+<<<<<<< HEAD
+>>>>>>> 202ce1257428aaf9f7db85cb7bac330278f424bb
+=======
 >>>>>>> 202ce1257428aaf9f7db85cb7bac330278f424bb
 - DONE: averge_number_of_items_bought_on_the_day
 
