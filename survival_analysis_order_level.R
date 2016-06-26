@@ -198,3 +198,8 @@ plot(survfit(coxph.model), xlab='Consecutive orders',
      ylab='Proportion Not Rearrested')
 lines(mini.surv, col=c("red", "blue"))
 
+####################################################################
+#Save relevant variables for merge:
+
+save(survival.df, file="C:/Users/Nk/Documents/Uni/APA/survival.RDa")
+
