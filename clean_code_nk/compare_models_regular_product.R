@@ -14,8 +14,8 @@ library(foreach)
 library(doParallel) 
 library(zoo)
 
-load("C:/Users/Nk/Documents/Uni/APA/data_2_8.RDa")
-load("C:/Users/Nk/Documents/Uni/APA/survival.RDa")
+load("C:/Users/Nk/Documents/Uni/APA/data_2_9.RDa")
+#load("C:/Users/Nk/Documents/Uni/APA/survival.RDa")
 
 # registering the cores
 coreCount <- detectCores(logical = FALSE)
@@ -27,9 +27,11 @@ df<- df[!is.na(df$returnQuantity)]
 df<- df[,productGroup_return_ratio:=sum(returnQuantity)/sum(quantity), by=.(productGroup)]
 
 df$yearmon<- as.yearmon(df$orderDate)
-df<- df[,customer_return_ratio:=sum(returnQuantity)/sum(quantity), by=.(customerID)]
 df<- df[,customer_return_ratio_per_productGroup:=sum(returnQuantity)/sum(quantity), by=.(customerID, productGroup)]
-
+df$regular_product_factor<- as.factor(ifelse(df$regular_product>3,1,0))
+df$week<- week(df$orderDate)
+df$year<- year(df$orderDate)
+df$month<- month(df$orderDate)
 
 #survival.df<- survival.df[,c("customerID", "average_time_between_returns"),with=F]
 #survival.df<- survival.df[!duplicated(survival.df),]
@@ -42,22 +44,23 @@ unused.vars <- c("unique_ID", "returnQuantity", "orderID", "orderDate", "article
 
 # model parameters
 f.trees <- 200
-f.mtry  <- 3
+f.mtry  <- 6
 
 # data parameters
 data.ratio <- 0.6
 
 # data manipulations
-#trainingRows<-createDataPartition(df$returnQuantity, p=data.ratio, list=FALSE)
-#d.train <- df[c(trainingRows)]
-#d.valid <- df[c(-trainingRows)]
 
-df$article_return_ratio_per_week[is.na(df$article_return_ratio_per_week)]<-0
-df$article_return_ratio_per_month[is.na(df$article_return_ratio_per_month)]<- 0
+trainingRows<-createDataPartition(df$returnQuantity, p=data.ratio, list=FALSE)
+d.train <- df[c(trainingRows)]
+d.valid <- df[c(-trainingRows)]
 
-d.train<- df[df$orderDate< "2015-07-01",]
-d.valid<- df[df$orderDate>="2015-07-01"]
+# Subset only for regular products:
 
+#d.train<- df[df$orderDate< "2015-07-01",]
+#d.valid<- df[df$orderDate>="2015-07-01",]
+
+#d.valid<- d.valid[d.valid$regular_product>3,]
 
 # marking unused variables
 #drops <- names(df) %in% unused.vars
@@ -80,6 +83,9 @@ rm(data)
 # remarking unused variables
 #drops <- names(d.train) %in% unused.vars
 
+#Subset for observations of interest:
+#d.train<- d.train[d.train$return_per_articleID_week!=0.5 & d.train$return_per_articleID_week!=1 & d.train$return_per_articleID_week!=0 ,]
+#d.valid<- d.valid[d.valid$return_per_articleID_week!=0.5 & d.valid$return_per_articleID_week!=1 & d.valid$return_per_articleID_week!=0, ]
 
 #############################################
 #                                           #
@@ -88,17 +94,20 @@ rm(data)
 #############################################
 
 
-m.vars1 <- c("quantity", "revenue", "rrp", "returnBin", "yearQuarter", 
+m.vars1 <- c("quantity", "revenue", "price","returnBin", "yearQuarter", 
              "number_of_same_items_in_order", "relative_deviation_price_mean_byCustomerID",
-             "productGroup", "return_per_customerID", "return_per_productGroup", "article_return_ratio_per_month")
+             "return_per_customerID", "return_per_articleID", "return_per_size")
 
-m.vars2 <- c("quantity", "revenue", "rrp", "returnBin", "yearQuarter", 
+m.vars2 <- c("quantity", "revenue", "price","Sale", "returnBin", "yearQuarter", 
              "number_of_same_items_in_order", "relative_deviation_price_mean_byCustomerID",
-             "productGroup", "return_per_customerID",
-              "article_return_ratio_per_week", "article_return_ratio_per_month")
+             "return_per_customerID", "return_per_size", "return_per_articleID", "return_per_articleID_month")
+
+#Sample for random forest:
+#sample_vec<- sample(d.train$unique_ID, size=20000)
+#d.train<- d.train[sample_vec,]
 
 # training forests
-m.forest1 <- randomForest(returnBin ~ ., data = d.train[1:20000,m.vars1], ntree = f.trees, mtry = f.mtry)
+m.forest1 <- randomForest(returnBin ~ ., data = na.omit(d.train[1:20000,m.vars1]), ntree = f.trees, mtry = f.mtry)
 m.forest2 <- randomForest(returnBin ~ ., data = na.omit(d.train[1:20000,m.vars2]), ntree = f.trees, mtry = f.mtry)
 
 # extracting predictions
@@ -107,8 +116,8 @@ f.pred2 <- predict(m.forest2, newdata = d.valid, type = "prob")[,"1"]
 
 
 # preparing predictions
-f.pred1 <- prepare.prediction(f.pred1, test.data = d.valid, cutoff = 0.6)
-f.pred2 <- prepare.prediction(f.pred2, test.data = d.valid, cutoff = 0.6)
+f.pred1 <- prepare.prediction(f.pred1, test.data = d.valid, cutoff = 0.50)
+f.pred2 <- prepare.prediction(f.pred2, test.data = d.valid, cutoff = 0.50)
 
 
 # saving error measures

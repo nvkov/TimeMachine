@@ -22,8 +22,6 @@ Mode <- function(x, na.rm = FALSE) {
 }
 
 #------------------------------------------------------
-
-
 df<-df[order(df$returnBin),]
 df<-df[order(df$orderID),]
 df<-df[order(df$customerID),]
