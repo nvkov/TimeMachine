@@ -205,7 +205,9 @@ add_returns <- function(train, test, standard_value = 0.5) {
   train$return_per_articleID_week<- return_per_articleID_week(train)
   train$return_per_articleID_month<- return_per_articleID_month(train)
   train$return_per_weekday<- return_per_weekday(train)
-  
+  train$return_per_week<- return_per_week(train)
+  train$return_per_month<- return_per_month(train)
+  train$return_per_weekday_year<- return_per_weekday_year(train)
   
   # writing to test subcet
   test <- merge(test,unique(train[,.(return_per_color),by=colorCode]), by="colorCode",all.x = TRUE)
@@ -218,6 +220,10 @@ add_returns <- function(train, test, standard_value = 0.5) {
   test <- merge(test,unique(train[,.(return_per_articleID_week),by=.(articleID, week)]), by=c("articleID", "week"),all.x = TRUE)
   test <- merge(test,unique(train[,.(return_per_articleID_month),by=.(articleID, month)]), by=c("articleID", "month"),all.x = TRUE)
   test <- merge(test,unique(train[,.(return_per_weekday),by=.(weekday)]), by=c("weekday"),all.x = TRUE)
+  test <- merge(test,unique(train[,.(return_per_week),by=.(week, year)]), by=c("week", "year"),all.x = TRUE)
+  test <- merge(test,unique(train[,.(return_per_month),by=.(month, year)]), by=c("month", "year"),all.x = TRUE)
+  test <- merge(test,unique(train[,.(return_per_weekday_year),by=.(weekday, year)]), by=c("weekday", "year"),all.x = TRUE)
+  
   
   # imputing missing values
   test[,return_per_color := replace(return_per_color,is.na(return_per_color),standard_value)]
@@ -230,6 +236,10 @@ add_returns <- function(train, test, standard_value = 0.5) {
   test[,return_per_articleID_week := replace(return_per_articleID_week,is.na(return_per_articleID_week),standard_value)]
   test[,return_per_articleID_month := replace(return_per_articleID_month,is.na(return_per_articleID_month),standard_value)]
   test[,return_per_weekday := replace(return_per_weekday,is.na(return_per_weekday),standard_value)]
+  test[,return_per_week := replace(return_per_week,is.na(return_per_week),standard_value)]
+  test[,return_per_month := replace(return_per_month,is.na(return_per_month),standard_value)]
+  test[,return_per_weekday_year := replace(return_per_weekday_year,is.na(return_per_weekday_year),standard_value)]
+  
   
   ## imputation for customerID: average return of new customer
   returning_customers <- duplicated(test$customerID)
@@ -317,6 +327,27 @@ return_per_articleID_month <- function(dt){
 # return per weekday:
 return_per_weekday <- function(dt){
   dt[, new := mean(returnQuantity,na.rm=TRUE), by = .(weekday)]
+  dt[is.na(dt$new)]$new <- 0.5
+  return(dt$new)
+}
+
+# return per week:
+return_per_week <- function(dt){
+  dt[, new := mean(returnQuantity,na.rm=TRUE), by = .(week, year)]
+  dt[is.na(dt$new)]$new <- 0.5
+  return(dt$new)
+}
+
+# return per month:
+return_per_month <- function(dt){
+  dt[, new := mean(returnQuantity,na.rm=TRUE), by = .(month, year)]
+  dt[is.na(dt$new)]$new <- 0.5
+  return(dt$new)
+}
+
+# return per weekday (yearly comparison:
+return_per_weekday_year <- function(dt){
+  dt[, new := mean(returnQuantity,na.rm=TRUE), by = .(weekday, year)]
   dt[is.na(dt$new)]$new <- 0.5
   return(dt$new)
 }
