@@ -5,6 +5,7 @@ library("data.table")
 
 load("C:/Users/Nk/Documents/Uni/APA/data_2_7_full.RDa")
 
+class<-df[is.na(df$returnQuantity)]
 df<- df[!is.na(df$returnQuantity)]
 
 #relevantCols<- c("unique_ID", "customerID", "articleID", "orderID","orderDate", "returnBin", 
