@@ -14,27 +14,16 @@ library(foreach)
 library(doParallel) 
 library(zoo)
 
-load("C:/Users/Nk/Documents/Uni/APA/data_2_9.RDa")
-load("C:/Users/Nk/Documents/Uni/APA/survival.RDa")
+load("C:/Users/Nk/Documents/Uni/APA/data_2_10.RDa")
 
 # registering the cores
 coreCount <- detectCores(logical = FALSE)
 registerDoParallel(coreCount)
 
-source("C:/Users/Nk/Documents/Uni/APA/TimeMachine/functions/pred_functions.R")
+source("C:/Users/Nk/Documents/Uni/APA/TimeMachine/clean_code/pred_functions_updated.R")
 
 df<- df[!is.na(df$returnQuantity)]
-df<- df[,productGroup_return_ratio:=sum(returnQuantity)/sum(quantity), by=.(productGroup)]
 
-df$yearmon<- as.yearmon(df$orderDate)
-df<- df[,customer_return_ratio:=sum(returnQuantity)/sum(quantity), by=.(customerID)]
-df<- df[,customer_return_ratio_per_productGroup:=sum(returnQuantity)/sum(quantity), by=.(customerID, productGroup)]
-
-
-#survival.df<- survival.df[,c("customerID", "average_time_between_returns"),with=F]
-#survival.df<- survival.df[!duplicated(survival.df),]
-
-#df<- merge(df, survival.df, by="customerID")
 
 # listing variables which are not used in models
 unused.vars <- c("unique_ID", "returnQuantity", "orderID", "orderDate", "articleID", "voucherID", 
@@ -47,25 +36,17 @@ f.mtry  <- 3
 # data parameters
 data.ratio <- 0.6
 
-# data manipulations
-df$article_return_ratio_per_week[is.na(df$article_return_ratio_per_week)]<-0
-df$article_return_ratio_per_month[is.na(df$article_return_ratio_per_month)]<- 0
+# data manipulations:
 
+#Random data partitioning:
 trainingRows<-createDataPartition(df$returnQuantity, p=data.ratio, list=FALSE)
 d.train <- df[c(trainingRows)]
 d.valid <- df[c(-trainingRows)]
 
-
+#Alternative data partitioning:
 d.train<- df[df$orderDate< "2015-07-01",]
 d.valid<- df[df$orderDate>="2015-07-01",]
 
-
-# marking unused variables
-#drops <- names(df) %in% unused.vars
-
-# partitioning [level 1]
-#d.valid <- labeled1[-data.part1,]
-#d.train <- labeled1[ data.part1,]
 
 # creating features and imputing values
 data    <- add_returns(d.train, d.valid)
@@ -75,8 +56,8 @@ d.train <- d.train[, !colnames(d.train) %in% "new"]
 rm(data)
 
 # sorting coloumns in datasets
-#d.train <- d.train[,   order(names(d.train))]
-#d.valid <- d.valid[,   order(names(d.valid))]
+d.train <- d.train[,   order(names(d.train))]
+d.valid <- d.valid[,   order(names(d.valid))]
 
 # remarking unused variables
 #drops <- names(d.train) %in% unused.vars
@@ -88,15 +69,19 @@ rm(data)
 #                                           #
 #############################################
 
+compare.models<-function(d.train, d.valid, baseline, variable){
 
-m.vars1 <- c("quantity", "revenue", "rrp", "returnBin", "yearQuarter", 
-             "number_of_same_items_in_order", "relative_deviation_price_mean_byCustomerID",
-             "productGroup", "return_per_customerID", "return_per_productGroup","return_per_articleID", "return_per_size")
+m.vars1<- baseline
+m.vars2<- c(baseline, variable)
+  
+#m.vars1 <- c("quantity", "revenue", "rrp", "returnBin", "yearQuarter", 
+#             "number_of_same_items_in_order", "relative_deviation_price_mean_byCustomerID",
+#             "productGroup", "return_per_customerID", "return_per_productGroup","return_per_articleID", "return_per_size")
 
-m.vars2 <- c("quantity", "revenue", "rrp", "returnBin", "yearQuarter", 
-             "number_of_same_items_in_order", "relative_deviation_price_mean_byCustomerID",
-             "productGroup", "return_per_customerID", "return_per_articleID", "return_per_size",
-              "regular_product")
+#m.vars2 <- c("quantity", "revenue", "rrp", "returnBin", "yearQuarter", 
+#             "number_of_same_items_in_order", "relative_deviation_price_mean_byCustomerID",
+#             "productGroup", "return_per_customerID", "return_per_articleID", "return_per_size",
+#              "regular_product")
 
 # training forests
 m.forest1 <- randomForest(returnBin ~ ., data = d.train[,m.vars1], ntree = f.trees, mtry = f.mtry)
@@ -120,5 +105,6 @@ error2 <- prediction.error(f.pred2, test.data = d.valid)$total.error
 print(paste0("Data version 1: RF has error ", error1))
 print(paste0("Data version 2: RF has error ", error2))
 
+}
 
 
