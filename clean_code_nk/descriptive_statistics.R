@@ -97,7 +97,8 @@ relevantCols<- c("return_per_weekday_year", "weekday", "year")
 temp<-df[, relevantCols]
 temp<- temp[!duplicated(temp),]
 temp<-temp[order(temp$return_per_weekday_year),]
-plot(as.factor(temp$weekday), temp$return_per_weekday_year, col=ifelse(temp$year==2014, 1, 2))
+View(temp) #seems to be no huge difference
+#plot(as.factor(temp$weekday), temp$return_per_weekday_year, col=ifelse(temp$year==2014, 1, 2))
 
 ########################################################
 
