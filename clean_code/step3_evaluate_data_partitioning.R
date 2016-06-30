@@ -4,8 +4,8 @@ rm(list=ls())
 
 #Working directory:
 setwd("C:/Users/Nk/Documents/Uni/APA/03_variable_creation/")
-source("C:/Users/Nk/Documents/Uni/APA/TimeMachine/clean_code_nk/pred_functions_updated.R")
-source("C:/Users/Nk/Documents/Uni/APA/TimeMachine/clean_code_nk/plot_partitioning.R")
+source("C:/Users/Nk/Documents/Uni/APA/TimeMachine/clean_code/pred_functions_updated.R")
+source("C:/Users/Nk/Documents/Uni/APA/TimeMachine/clean_code/plot_partitioning.R")
 
 
 # Load libraries:
