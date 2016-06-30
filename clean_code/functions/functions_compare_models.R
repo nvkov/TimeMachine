@@ -1,3 +1,10 @@
+# Parameters:
+# d.train   -   training set
+# d.valid   -   validation set
+# baseline  -   character vector witha list of variable in the baseline model
+# variable  -   new variable to be assessed against the baseline model
+
+
 compare.models<-function(d.train, d.valid, baseline, variable){
   
   m.vars1<- baseline

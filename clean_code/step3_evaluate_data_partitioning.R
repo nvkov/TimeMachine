@@ -34,32 +34,27 @@ return_vars<- c("return_per_color", "return_per_size", "return_per_productGroup"
 data<- add_returns(df[df$part_v1=="tt.tr",], df[df$part_v1=="t.va",])
 d.train.p1 <- data.table(data$train[,return_vars])
 d.valid.p1 <- data.table(data$test[,return_vars])
-#d.train.p1 <- d.train[, !colnames(d.train) %in% "new"]
 rm(data)
 
 data<- add_returns(df[df$part_v2=="tt.tr",], df[df$part_v2=="t.va",])
 d.train.p2 <- data.table(data$train[,return_vars])
 d.valid.p2 <- data.table(data$test[,return_vars])
-#d.train.p2 <- d.train[, !colnames(d.train) %in% "new"]
 rm(data)
 
 data<- add_returns(df[df$part3=="tt.tr",], df[df$part3=="t.va",])
 d.train.p3 <- data.table(data$train[,return_vars])
 d.valid.p3 <- data.table(data$test[,return_vars])
-#d.train.p3 <- d.train[, !colnames(d.train) %in% "new"]
 rm(data)
 
 data<- add_returns(df[df$part_v4=="train",], df[df$part_4=="class",])
 d.train.p4 <- data.table(data$train[,return_vars])
 d.valid.p4 <- data.table(data$test[,return_vars])
-#d.train.p4 <- d.train[, !colnames(d.train) %in% "new"]
 rm(data)
 
 
 data<- add_returns(df[!is.na(df$returnQuantity),], df[is.na(df$returnQuantity),])
 d.train <- data.table(data$train[,return_vars])
 d.valid <- data.table(data$test[,return_vars])
-#d.train <- d.train[, !colnames(d.train) %in% "new"]
 rm(data)
 
 
