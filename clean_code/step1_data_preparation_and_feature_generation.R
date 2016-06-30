@@ -16,13 +16,14 @@ library(doParallel)
 library(zoo)
 
 load("C:/Users/Nk/Documents/Uni/APA/data_2_7_full.RDa")
-source("C:/Users/Nk/Documents/Uni/APA/TimeMachine/functions/pred_functions.R")
+#source("C:/Users/Nk/Documents/Uni/APA/TimeMachine/functions/pred_functions.R")
 
 #Add possible time dimensions:
 df$yearmon<- as.yearmon(df$orderDate)
 df$week<- week(df$orderDate)
 df$year<- year(df$orderDate)
 df$month<- month(df$orderDate)
+df$weekday<- weekdays(df$orderDate)
 
 ######################################################
 

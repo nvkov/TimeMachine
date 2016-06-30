@@ -1,0 +1,5 @@
+[1] "Data version 1: RF has error 290316"
+[1] "Data version 2: RF has error 290369"
+[1] "Variables used data version 1: quantity,revenue,rrp,returnBin,yearQuarter,number_of_same_items_in_order,relative_deviation_price_mean_byCustomerID,productGroup,return_per_customerID,return_per_productGroup,return_per_size,return_per_articleID,return_per_paymentMethod,total_number_of_articles_per_order,return_per_weekday"
+[1] "Added variable data version 2: customer_age"
+[1] "-------------------------------------------------------"
