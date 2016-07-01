@@ -36,9 +36,8 @@ unused.vars <- c("unique_ID", "returnQuantity", "orderID", "orderDate", "article
                  "part_v2", "part3", "part_v4")
 
 # model parameters
-f.trees <- 200
+f.trees <- 20
 f.mtry  <- 3
-num_obs <- nrow(d.train) # number of observations used for rf
 
 # data parameters
 data.ratio <- 0.6
@@ -74,6 +73,8 @@ d.valid <- d.valid[,   order(names(d.valid))]
 
 d.valid.subset<- d.valid[d.valid$return_per_articleID!=0.5,]
 
+d.valid$year<- as.factor(d.valid$year)
+d.train$year<- as.factor(d.train$year)
 
 
 #############################################
@@ -88,14 +89,14 @@ d.valid.subset<- d.valid[d.valid$return_per_articleID!=0.5,]
 baseline<- c("quantity", "revenue", "rrp", "returnBin", "yearQuarter",
               "number_of_same_items_in_order", "relative_deviation_price_mean_byCustomerID",
               "productGroup", "return_per_customerID", "return_per_productGroup", "return_per_size", 
-               "return_per_paymentMethod", "total_number_of_articles_per_order",
-              "return_per_weekday")
+              "return_per_paymentMethod", "total_number_of_articles_per_order",
+              "return_per_weekday", "return_per_articleID")
 
-variable<- "return_per_articleID"
+variable<- "year"
 
 filename<- variable
 
-compare.models(d.train, d.valid.subset, baseline, variable, 2000, filename)
+compare.models(d.train, d.valid, baseline, variable, nrow(d.train), filename)
 
 
 

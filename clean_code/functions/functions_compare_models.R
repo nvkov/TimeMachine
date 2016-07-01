@@ -40,6 +40,8 @@ compare.models<-function(d.train, d.valid, baseline, variable, num_obs, filename
   print(paste0("Data version 2: RF has error ", error2))
   print(paste0("Variables used data version 1: ", paste(baseline, collapse=",")))
   print(paste0("Added variable data version 2: ", paste(variable, collapse=",")))
+  print(m.forest1)
+  print(m.forest2)
   
   print("-------------------------------------------------------")
   #print(paste0("Data version 2: RF has error ", error2))
