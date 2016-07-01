@@ -1,0 +1,136 @@
+[1] "Data version 1: RF has error 306497"
+[1] "Data version 2: RF has error 301514"
+[1] "Variables used data version 1: quantity,revenue,rrp,returnBin,yearQuarter,number_of_same_items_in_order,relative_deviation_price_mean_byCustomerID,productGroup,return_per_customerID,return_per_productGroup,return_per_size,return_per_paymentMethod,total_number_of_articles_per_order,return_per_weekday"
+[1] "Added variable data version 2: return_per_articleID"
+[1] "-------------------------------------------------------"
+[1] "Data version 1: RF has error 298005"
+[1] "Data version 2: RF has error 292046"
+[1] "Variables used data version 1: quantity,revenue,rrp,returnBin,yearQuarter,number_of_same_items_in_order,relative_deviation_price_mean_byCustomerID,productGroup,return_per_customerID,return_per_productGroup,return_per_size,return_per_paymentMethod,total_number_of_articles_per_order,return_per_weekday"
+[1] "Added variable data version 2: return_per_articleID"
+[1] "-------------------------------------------------------"
+[1] "Data version 1: RF has error 295044"
+[1] "Data version 2: RF has error 289434"
+[1] "Variables used data version 1: quantity,revenue,rrp,returnBin,yearQuarter,number_of_same_items_in_order,relative_deviation_price_mean_byCustomerID,productGroup,return_per_customerID,return_per_productGroup,return_per_size,return_per_paymentMethod,total_number_of_articles_per_order,return_per_weekday"
+[1] "Added variable data version 2: return_per_articleID"
+[1] "-------------------------------------------------------"
+[1] "Data version 1: RF has error 304125"
+[1] "Data version 2: RF has error 301736"
+[1] "Variables used data version 1: quantity,revenue,rrp,returnBin,yearQuarter,number_of_same_items_in_order,relative_deviation_price_mean_byCustomerID,productGroup,return_per_customerID,return_per_productGroup,return_per_size,return_per_paymentMethod,total_number_of_articles_per_order,return_per_weekday"
+[1] "Added variable data version 2: return_per_articleID"
+[1] "-------------------------------------------------------"
+[1] "Data version 1: RF has error 305557"
+[1] "Data version 2: RF has error 302122"
+[1] "Variables used data version 1: quantity,revenue,rrp,returnBin,yearQuarter,number_of_same_items_in_order,relative_deviation_price_mean_byCustomerID,productGroup,return_per_customerID,return_per_productGroup,return_per_size,return_per_paymentMethod,total_number_of_articles_per_order,return_per_weekday"
+[1] "Added variable data version 2: return_per_articleID"
+
+Call:
+ randomForest(formula = returnBin ~ ., data = d.train[1:num_obs,      m.vars1], ntree = f.trees, mtry = f.mtry) 
+               Type of random forest: classification
+                     Number of trees: 200
+No. of variables tried at each split: 3
+
+        OOB estimate of  error rate: 25.8%
+Confusion matrix:
+     0   1 class.error
+0 1029 238   0.1878453
+1  278 455   0.3792633
+
+Call:
+ randomForest(formula = returnBin ~ ., data = d.train[1:num_obs,      m.vars2], ntree = f.trees, mtry = f.mtry) 
+               Type of random forest: classification
+                     Number of trees: 200
+No. of variables tried at each split: 3
+
+        OOB estimate of  error rate: 26.65%
+Confusion matrix:
+     0   1 class.error
+0 1011 256   0.2020521
+1  277 456   0.3778990
+[1] "-------------------------------------------------------"
+[1] "Data version 1: RF has error 305975"
+[1] "Data version 2: RF has error 302681"
+[1] "Variables used data version 1: quantity,revenue,rrp,returnBin,yearQuarter,number_of_same_items_in_order,relative_deviation_price_mean_byCustomerID,productGroup,return_per_customerID,return_per_productGroup,return_per_size,return_per_paymentMethod,total_number_of_articles_per_order,return_per_weekday"
+[1] "Added variable data version 2: return_per_articleID"
+
+Call:
+ randomForest(formula = returnBin ~ ., data = d.train[1:num_obs,      m.vars1], ntree = f.trees, mtry = f.mtry) 
+               Type of random forest: classification
+                     Number of trees: 200
+No. of variables tried at each split: 3
+
+        OOB estimate of  error rate: 26.65%
+Confusion matrix:
+     0   1 class.error
+0 1017 250   0.1973165
+1  283 450   0.3860846
+
+Call:
+ randomForest(formula = returnBin ~ ., data = d.train[1:num_obs,      m.vars2], ntree = f.trees, mtry = f.mtry) 
+               Type of random forest: classification
+                     Number of trees: 200
+No. of variables tried at each split: 3
+
+        OOB estimate of  error rate: 26.4%
+Confusion matrix:
+     0   1 class.error
+0 1019 248   0.1957380
+1  280 453   0.3819918
+[1] "-------------------------------------------------------"
+[1] "Data version 1: RF has error 298997"
+[1] "Data version 2: RF has error 293270"
+[1] "Variables used data version 1: quantity,revenue,rrp,returnBin,yearQuarter,number_of_same_items_in_order,relative_deviation_price_mean_byCustomerID,productGroup,return_per_customerID,return_per_productGroup,return_per_size,return_per_paymentMethod,total_number_of_articles_per_order,return_per_weekday"
+[1] "Added variable data version 2: return_per_articleID"
+
+Call:
+ randomForest(formula = returnBin ~ ., data = d.train[1:num_obs,      m.vars1], ntree = f.trees, mtry = f.mtry) 
+               Type of random forest: classification
+                     Number of trees: 200
+No. of variables tried at each split: 3
+
+        OOB estimate of  error rate: 29.71%
+Confusion matrix:
+     0    1 class.error
+0 6798 3229   0.3220305
+1 2713 7260   0.2720345
+
+Call:
+ randomForest(formula = returnBin ~ ., data = d.train[1:num_obs,      m.vars2], ntree = f.trees, mtry = f.mtry) 
+               Type of random forest: classification
+                     Number of trees: 200
+No. of variables tried at each split: 3
+
+        OOB estimate of  error rate: 28.7%
+Confusion matrix:
+     0    1 class.error
+0 6900 3127   0.3118580
+1 2613 7360   0.2620074
+[1] "-------------------------------------------------------"
+[1] "Data version 1: RF has error 295855"
+[1] "Data version 2: RF has error 290051"
+[1] "Variables used data version 1: quantity,revenue,rrp,returnBin,yearQuarter,number_of_same_items_in_order,relative_deviation_price_mean_byCustomerID,productGroup,return_per_customerID,return_per_productGroup,return_per_size,return_per_paymentMethod,total_number_of_articles_per_order,return_per_weekday"
+[1] "Added variable data version 2: return_per_articleID"
+
+Call:
+ randomForest(formula = returnBin ~ ., data = d.train[1:num_obs,      m.vars1], ntree = f.trees, mtry = f.mtry) 
+               Type of random forest: classification
+                     Number of trees: 200
+No. of variables tried at each split: 3
+
+        OOB estimate of  error rate: 28.34%
+Confusion matrix:
+      0     1 class.error
+0 65118 31682   0.3272934
+1 24996 78204   0.2422093
+
+Call:
+ randomForest(formula = returnBin ~ ., data = d.train[1:num_obs,      m.vars2], ntree = f.trees, mtry = f.mtry) 
+               Type of random forest: classification
+                     Number of trees: 200
+No. of variables tried at each split: 3
+
+        OOB estimate of  error rate: 27.54%
+Confusion matrix:
+      0     1 class.error
+0 66003 30797   0.3181508
+1 24284 78916   0.2353101
+[1] "-------------------------------------------------------"

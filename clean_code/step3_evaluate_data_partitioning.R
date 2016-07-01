@@ -4,8 +4,8 @@ rm(list=ls())
 
 #Working directory:
 setwd("C:/Users/Nk/Documents/Uni/APA/03_variable_creation/")
-source("C:/Users/Nk/Documents/Uni/APA/TimeMachine/clean_code/pred_functions_updated.R")
-source("C:/Users/Nk/Documents/Uni/APA/TimeMachine/clean_code/plot_partitioning.R")
+source("C:/Users/Nk/Documents/Uni/APA/TimeMachine/clean_code/functions/functions_pred_functions_updated.R")
+source("C:/Users/Nk/Documents/Uni/APA/TimeMachine/clean_code/functions/functions_plot_partitioning.R")
 
 
 # Load libraries:
@@ -20,7 +20,6 @@ library("StatMatch")
 load("C:/Users/Nk/Documents/Uni/APA/data_2_10.RDa")
 source("C:/Users/Nk/Documents/Uni/APA/TimeMachine/clean_code_nk/pred_functions_updated.R")
 
-df$weekday<- weekdays(df$orderDate)
 
 #Select relevant columns:
 return_vars<- c("return_per_color", "return_per_size", "return_per_productGroup", 
@@ -88,5 +87,13 @@ for(i in return_vars){
 for(i in return_vars){
   plot.returns.train(i)
 }
+
+########################################################################
+#Second step: multivariate comparison: 
+#Compute Mahalanobis distance for returns
+
+#First test only for validation and classification:
+rm(df, d.train.p1, d.train.p2, d.train)
+
 
 
