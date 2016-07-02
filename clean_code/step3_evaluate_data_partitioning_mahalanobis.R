@@ -29,30 +29,31 @@ return_vars<- c("quantity", "revenue", "rrp",
                 "return_per_paymentMethod", "total_number_of_articles_per_order",
                 "return_per_weekday", "return_per_articleID")
 
+
 #Load correct return ratios:
 data<- add_returns(df[df$part_v1=="tt.tr",], df[df$part_v1=="t.va",])
-#d.train.p1 <- data.table(data$train[,return_vars])
+d.train.p1 <- data.table(data$train[,return_vars])
 d.valid.p1 <- data.table(data$test[,return_vars])
 rm(data)
 
 data<- add_returns(df[df$part_v2=="tt.tr",], df[df$part_v2=="t.va",])
-#d.train.p2 <- data.table(data$train[,return_vars])
+d.train.p2 <- data.table(data$train[,return_vars])
 d.valid.p2 <- data.table(data$test[,return_vars])
 rm(data)
 
 data<- add_returns(df[df$part3=="tt.tr",], df[df$part3=="t.va",])
-#d.train.p3 <- data.table(data$train[,return_vars])
+d.train.p3 <- data.table(data$train[,return_vars])
 d.valid.p3 <- data.table(data$test[,return_vars])
 rm(data)
 
-#data<- add_returns(df[df$part_v4=="train",], df[df$part_4=="class",])
-#d.train.p4 <- data.table(data$train[,return_vars])
-#d.valid.p4 <- data.table(data$test[,return_vars])
-#rm(data)
+data<- add_returns(df[df$orderDate<="2015-02-17",], df[df$orderDate=="2015-02-17",])
+d.train.p4 <- data.table(data$train[,return_vars])
+d.valid.p4 <- data.table(data$test[,return_vars])
+rm(data)
 
 
 data<- add_returns(df[!is.na(df$returnQuantity),], df[is.na(df$returnQuantity),])
-#d.train <- data.table(data$train[,return_vars])
+d.train <- data.table(data$train[,return_vars])
 d.valid <- data.table(data$test[,return_vars])
 rm(data)
 
@@ -61,26 +62,41 @@ rm(data)
 
 rm(df)
 
-mahalanobis_part_v1<- D.sq(d.train.p1, d.train)
-mahalanobis_part_v1$D.sq
+sink(file="C:/Users/Nk/Documents/Uni/APA/TimeMachine/clean_code/results/mahalanobis_distances.txt", append=T)
+print("Compare training sets")
 
-mahalanobis.train_part_v2<- D.sq(d.train.p2, d.train)
-mahalanobis.train_part_v2$D.sq
+print(paste0("Partition 1: ", D.sq(d.train.p1, d.train)$D.sq))
+#mahalanobis_part_v1$D.sq
 
-mahalanobis.train_part_v3<- D.sq(d.train.p3, d.train)
-mahalanobis.train_part_v3$D.sq
+print(paste0("Partition 2: ", D.sq(d.train.p2, d.train)$D.sq))
+#mahalanobis.train_part_v2$D.sq
 
+print(paste0("Partition 3: ", D.sq(d.train.p3, d.train)$D.sq))
+#mahalanobis.train_part_v3$D.sq
+
+print(paste0("Partition 4: ", D.sq(d.train.p4, d.train)$D.sq))
+#mahalanobis.train_part_v4$D.sq
+
+print("Compare validations sets")
 
 #Calculate Mahalanobis distance for different partitionings: validation data:
 
-mahalanobis.valid_part_v1<- D.sq(d.valid.p1, d.valid)
-mahalanobis.valid_part_v1$D.sq
+print(paste0("Partition 1: ", D.sq(d.valid.p1, d.valid)$D.sq))
+#mahalanobis.valid_part_v1$D.sq
 
-mahalanobis.valid_part_v2<- D.sq(d.valid.p2, d.valid)
-mahalanobis.valid_part_v2$D.sq
+print(paste0("Partition 2: ", D.sq(d.valid.p2, d.valid)$D.sq))
+#mahalanobis.valid_part_v2$D.sq
 
-mahalanobis.valid_part_v3<- D.sq(d.valid.p3, d.valid)
-mahalanobis.valid_part_v3$D.sq
+print(paste0("Partition 3: ", D.sq(d.valid.p3, d.valid)$D.sq))
+#mahalanobis.valid_part_v3$D.sq
+
+print(paste0("Partition 4: ", D.sq(d.valid.p4, d.valid)$D.sq))
+#mahalanobis.valid_part_v4$D.sq
+sink()
+
+# Write table with results ------------------------------------------------
+
+
 
 
 # Pairwise Mahalanobis distance -------------------------------------------

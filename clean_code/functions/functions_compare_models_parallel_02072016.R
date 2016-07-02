@@ -3,19 +3,24 @@
 # d.valid   -   validation set
 # baseline  -   character vector witha list of variable in the baseline model
 # variable  -   new variable to be assessed against the baseline model
-
+library("foreach")
 
 compare.models<-function(d.train, d.valid, baseline, variable, num_obs, filename){
   
   m.vars1<- baseline
   m.vars2<- c(baseline, variable)
+
+  foreach(ntree=rep(20,2),.combine=combine,.packages='randomForest', .multicombine = T) %dopar%   
   
   # training forests
-  m.forest1 <- randomForest(returnBin ~ ., data = d.train[1:num_obs,m.vars1], ntree = f.trees, mtry = f.mtry)
+  m.forest1 <- randomForest(d.train$returnBin[1:num_obs] ~ ., data = d.train[1:num_obs,m.vars1], ntree = ntree, mtry = f.mtry)
   print("Estimated data version 1")
   
-  m.forest2 <- randomForest(returnBin ~ ., data = d.train[1:num_obs,m.vars2], ntree = f.trees, mtry = f.mtry)
+  
+  
+  m.forest2 <- randomForest(returnBin ~ ., data = d.train[1:num_obs,m.vars2], ntree = ntree, mtry = f.mtry)
   print("Estimated data version 2")
+  
   
   # extracting predictions
   f.pred1 <- predict(m.forest1, newdata = d.valid, type = "prob")[,"1"]
