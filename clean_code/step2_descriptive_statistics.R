@@ -134,3 +134,19 @@ table(temp$number_of_weeks_present)
 
 
 #############################################################
+#Plot customer number for full data:
+
+cust<- df[,.(customer_count=.N), by=.(orderDate)]
+plot(cust$orderDate, cust$customer_count, xlab="Date", ylab="customer count")
+abline(h=summary(cust$customer_count)[4], col="green")
+abline(h= summary(cust$customer_count)[4]+ 2*sd(cust$customer_count), col="red")
+abline(h= summary(cust$customer_count)[4]- 2*sd(cust$customer_count), col="red")
+
+#Plot number of returns per date:
+
+returns<- df[,.(returns=sum(returnQuantity)/sum(quantity)),by=.(orderDate)]
+plot(returns$orderDate, returns$returns, xlab="order date", ylab="return count")
+abline(h=summary(returns$returns)[4], col="green")
+abline(h= summary(returns$returns)[4]+ 2*sd(returns$returns), col="red")
+abline(h= summary(returns$returns)[4]- 2*sd(returns$returns), col="red")
+

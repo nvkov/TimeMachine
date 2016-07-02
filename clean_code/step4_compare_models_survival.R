@@ -21,7 +21,7 @@ registerDoParallel(coreCount)
 
 
 load("C:/Users/Nk/Documents/Uni/APA/data_2_10.RDa")
-
+load("C:/Users/Nk/Documents/Uni/APA/survival_data.RDa")
 # registering the cores
 #coreCount <- detectCores(logical = FALSE)
 #registerDoParallel(coreCount)
@@ -30,6 +30,14 @@ source("C:/Users/Nk/Documents/Uni/APA/TimeMachine/clean_code/functions/functions
 source("C:/Users/Nk/Documents/Uni/APA/TimeMachine/clean_code/functions/functions_compare_models.R")
 
 df<- df[!is.na(df$returnQuantity)]
+
+sdf<- survival.data.final[,.(average_length_of_survival=max(average_length_of_survival)), by=.(customerID)]
+rm(survival.data.final)
+
+#Small data preparation for survival 
+df<- df[,cum_article_count:=cumsum(quantity), by=customerID]
+df<- df[,cum_article_count_order:= max(cum_article_count), by=orderID]
+df<- merge(df, sdf, by="customerID")
 
 # listing variables which are not used in models
 unused.vars <- c("unique_ID", "returnQuantity", "orderID", "orderDate", "articleID", "voucherID", 
@@ -63,7 +71,7 @@ rm(df)
 data    <- add_returns(d.train, d.valid)
 d.train <- data$train
 d.valid <- data$test
-d.train <- d.train[, !colnames(d.train) %in% "new"]
+#d.train <- d.train[, !colnames(d.train) %in% "new"]
 rm(data)
 
 # sorting coloumns in datasets
@@ -85,42 +93,12 @@ baseline<- c("rrp", "price", "returnBin", "yearQuarter",
              "productGroup", "return_per_customerID", "return_per_productGroup", "return_per_size", 
              "return_per_articleID")
 
-variable<- c("total_number_of_articles_per_order")
-
-#First round of selections:
-
-relevantVars<- names(d.train)[!names(d.train) %in% baseline]
-relevantVars<- relevantVars[!relevantVars %in% unused.vars]
-
-for(i in relevantVars[57:60]){
-variable<- i
-#Compare models:
-compare.models(d.train, d.valid, baseline, variable, 2000)
-}
-
-#########################################
-#Second round of selections:
-
 baseline2<- c("quantity", "revenue", "rrp", "returnBin", "yearQuarter",
-             "number_of_same_items_in_order", "relative_deviation_price_mean_byCustomerID",
-             "productGroup", "return_per_customerID", "return_per_productGroup", "return_per_size", 
-             "return_per_articleID", "return_per_paymentMethod")
+              "number_of_same_items_in_order", "relative_deviation_price_mean_byCustomerID",
+              "productGroup", "return_per_customerID", "return_per_productGroup", "return_per_size", 
+              "return_per_articleID", "return_per_paymentMethod")
 
 
-relevantVars2<- c("customer_age", "cumArticleCount", "return_per_articleID_month", 
-                  "C4", "C2", "return_per_articleID_week", 
-                  "return_per_weekday", "total_number_of_articles_per_order",
-                  "total_items_in_order")
-
-
-for(i in relevantVars2[8:9]){
-  variable<- i
-  #Compare models:
-  compare.models(d.train, d.valid, baseline2, variable, 20000)
-}
-
-#############################################
-#Third round of selections round of selections:
 baseline3<- c("quantity", "price", "rrp", "returnBin", "yearQuarter",
               "number_of_same_items_in_order", "relative_deviation_price_mean_byCustomerID",
               "productGroup", "return_per_customerID", "return_per_productGroup", "return_per_size", 
@@ -128,11 +106,30 @@ baseline3<- c("quantity", "price", "rrp", "returnBin", "yearQuarter",
               "return_per_weekday")
 
 
-relevantVars3<- c("customer_age", "cumArticleCount", "return_per_articleID_month", 
-                  "C4", "C2", "return_per_articleID_week")
+variable<- c("average_length_of_survival")
+variable2<- c("cum_article_count")
+variable3<- c("cum_article_count_order")
 
-for(i in relevantVars3){
-  variable<- i
-  #Compare models:
-  compare.models(d.train, d.valid, baseline3, variable, 200000, "rf_results_third_selection")
-}
+
+
+compare.models(d.train, d.valid, baseline3, variable2, 20000, "cumulative_counts")
+compare.models(d.train, d.valid, baseline3, variable3, 20000, "cumulative_counts")
+
+baseline4<- c("quantity", "price", "rrp", "returnBin", "yearQuarter",
+              "number_of_same_items_in_order", "relative_deviation_price_mean_byCustomerID",
+              "productGroup", "return_per_customerID", "return_per_productGroup", "return_per_size", 
+              "return_per_articleID", "return_per_paymentMethod", "total_number_of_articles_per_order",
+              "return_per_weekday", "average_length_of_survival")
+
+compare.models(d.train, d.valid, baseline4, variable2, 20000, "cumulative_counts")
+
+
+
+#########################################
+#Second round of selections:
+
+
+
+
+
+

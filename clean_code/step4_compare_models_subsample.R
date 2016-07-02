@@ -13,7 +13,6 @@ library(SparseM)
 library(foreach)
 library(doParallel) 
 library(zoo)
-library("doSNOW")
 
 # Setting number of cores in your machine. 
 registerDoSNOW(makeCluster(2, type="SOCK"))

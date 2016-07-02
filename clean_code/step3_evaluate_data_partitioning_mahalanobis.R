@@ -94,10 +94,6 @@ print(paste0("Partition 4: ", D.sq(d.valid.p4, d.valid)$D.sq))
 #mahalanobis.valid_part_v4$D.sq
 sink()
 
-# Write table with results ------------------------------------------------
-
-
-
 
 # Pairwise Mahalanobis distance -------------------------------------------
 

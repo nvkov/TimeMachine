@@ -1,0 +1,174 @@
+[1] "Data version 1: RF has error 289721"
+[1] "Data version 2: RF has error 289948"
+[1] "Variables used data version 1: quantity,price,rrp,returnBin,yearQuarter,number_of_same_items_in_order,relative_deviation_price_mean_byCustomerID,productGroup,return_per_customerID,return_per_productGroup,return_per_size,return_per_articleID,return_per_paymentMethod,total_number_of_articles_per_order,return_per_weekday"
+[1] "Added variable data version 2: customer_age"
+
+Call:
+ randomForest(formula = returnBin ~ ., data = d.train[1:num_obs,      m.vars1], ntree = f.trees, mtry = f.mtry) 
+               Type of random forest: classification
+                     Number of trees: 200
+No. of variables tried at each split: 3
+
+        OOB estimate of  error rate: 27.46%
+Confusion matrix:
+      0     1 class.error
+0 66147 30693   0.3169455
+1 24220 78940   0.2347809
+
+Call:
+ randomForest(formula = returnBin ~ ., data = d.train[1:num_obs,      m.vars2], ntree = f.trees, mtry = f.mtry) 
+               Type of random forest: classification
+                     Number of trees: 200
+No. of variables tried at each split: 3
+
+        OOB estimate of  error rate: 27.61%
+Confusion matrix:
+      0     1 class.error
+0 66014 30826   0.3183189
+1 24398 78762   0.2365064
+[1] "-------------------------------------------------------"
+[1] "Data version 1: RF has error 289577"
+[1] "Data version 2: RF has error 289777"
+[1] "Variables used data version 1: quantity,price,rrp,returnBin,yearQuarter,number_of_same_items_in_order,relative_deviation_price_mean_byCustomerID,productGroup,return_per_customerID,return_per_productGroup,return_per_size,return_per_articleID,return_per_paymentMethod,total_number_of_articles_per_order,return_per_weekday"
+[1] "Added variable data version 2: cumArticleCount"
+
+Call:
+ randomForest(formula = returnBin ~ ., data = d.train[1:num_obs,      m.vars1], ntree = f.trees, mtry = f.mtry) 
+               Type of random forest: classification
+                     Number of trees: 200
+No. of variables tried at each split: 3
+
+        OOB estimate of  error rate: 27.53%
+Confusion matrix:
+      0     1 class.error
+0 66000 30840   0.3184634
+1 24213 78947   0.2347131
+
+Call:
+ randomForest(formula = returnBin ~ ., data = d.train[1:num_obs,      m.vars2], ntree = f.trees, mtry = f.mtry) 
+               Type of random forest: classification
+                     Number of trees: 200
+No. of variables tried at each split: 3
+
+        OOB estimate of  error rate: 27.44%
+Confusion matrix:
+      0     1 class.error
+0 66084 30756   0.3175960
+1 24118 79042   0.2337922
+[1] "-------------------------------------------------------"
+[1] "Data version 1: RF has error 289618"
+[1] "Data version 2: RF has error 290659"
+[1] "Variables used data version 1: quantity,price,rrp,returnBin,yearQuarter,number_of_same_items_in_order,relative_deviation_price_mean_byCustomerID,productGroup,return_per_customerID,return_per_productGroup,return_per_size,return_per_articleID,return_per_paymentMethod,total_number_of_articles_per_order,return_per_weekday"
+[1] "Added variable data version 2: return_per_articleID_month"
+
+Call:
+ randomForest(formula = returnBin ~ ., data = d.train[1:num_obs,      m.vars1], ntree = f.trees, mtry = f.mtry) 
+               Type of random forest: classification
+                     Number of trees: 200
+No. of variables tried at each split: 3
+
+        OOB estimate of  error rate: 27.48%
+Confusion matrix:
+      0     1 class.error
+0 66126 30714   0.3171623
+1 24250 78910   0.2350717
+
+Call:
+ randomForest(formula = returnBin ~ ., data = d.train[1:num_obs,      m.vars2], ntree = f.trees, mtry = f.mtry) 
+               Type of random forest: classification
+                     Number of trees: 200
+No. of variables tried at each split: 3
+
+        OOB estimate of  error rate: 27.16%
+Confusion matrix:
+      0     1 class.error
+0 66569 30271   0.3125878
+1 24049 79111   0.2331233
+[1] "-------------------------------------------------------"
+[1] "Data version 1: RF has error 290056"
+[1] "Data version 2: RF has error 288640"
+[1] "Variables used data version 1: quantity,price,rrp,returnBin,yearQuarter,number_of_same_items_in_order,relative_deviation_price_mean_byCustomerID,productGroup,return_per_customerID,return_per_productGroup,return_per_size,return_per_articleID,return_per_paymentMethod,total_number_of_articles_per_order,return_per_weekday"
+[1] "Added variable data version 2: C4"
+
+Call:
+ randomForest(formula = returnBin ~ ., data = d.train[1:num_obs,      m.vars1], ntree = f.trees, mtry = f.mtry) 
+               Type of random forest: classification
+                     Number of trees: 200
+No. of variables tried at each split: 3
+
+        OOB estimate of  error rate: 27.49%
+Confusion matrix:
+      0     1 class.error
+0 66100 30740   0.3174308
+1 24243 78917   0.2350039
+
+Call:
+ randomForest(formula = returnBin ~ ., data = d.train[1:num_obs,      m.vars2], ntree = f.trees, mtry = f.mtry) 
+               Type of random forest: classification
+                     Number of trees: 200
+No. of variables tried at each split: 3
+
+        OOB estimate of  error rate: 26.86%
+Confusion matrix:
+      0     1 class.error
+0 66108 30732   0.3173482
+1 22984 80176   0.2227995
+[1] "-------------------------------------------------------"
+[1] "Data version 1: RF has error 289653"
+[1] "Data version 2: RF has error 288923"
+[1] "Variables used data version 1: quantity,price,rrp,returnBin,yearQuarter,number_of_same_items_in_order,relative_deviation_price_mean_byCustomerID,productGroup,return_per_customerID,return_per_productGroup,return_per_size,return_per_articleID,return_per_paymentMethod,total_number_of_articles_per_order,return_per_weekday"
+[1] "Added variable data version 2: C2"
+
+Call:
+ randomForest(formula = returnBin ~ ., data = d.train[1:num_obs,      m.vars1], ntree = f.trees, mtry = f.mtry) 
+               Type of random forest: classification
+                     Number of trees: 200
+No. of variables tried at each split: 3
+
+        OOB estimate of  error rate: 27.56%
+Confusion matrix:
+      0     1 class.error
+0 66022 30818   0.3182363
+1 24298 78862   0.2355370
+
+Call:
+ randomForest(formula = returnBin ~ ., data = d.train[1:num_obs,      m.vars2], ntree = f.trees, mtry = f.mtry) 
+               Type of random forest: classification
+                     Number of trees: 200
+No. of variables tried at each split: 3
+
+        OOB estimate of  error rate: 26.86%
+Confusion matrix:
+      0     1 class.error
+0 66021 30819   0.3182466
+1 22902 80258   0.2220047
+[1] "-------------------------------------------------------"
+[1] "Data version 1: RF has error 289971"
+[1] "Data version 2: RF has error 295175"
+[1] "Variables used data version 1: quantity,price,rrp,returnBin,yearQuarter,number_of_same_items_in_order,relative_deviation_price_mean_byCustomerID,productGroup,return_per_customerID,return_per_productGroup,return_per_size,return_per_articleID,return_per_paymentMethod,total_number_of_articles_per_order,return_per_weekday"
+[1] "Added variable data version 2: return_per_articleID_week"
+
+Call:
+ randomForest(formula = returnBin ~ ., data = d.train[1:num_obs,      m.vars1], ntree = f.trees, mtry = f.mtry) 
+               Type of random forest: classification
+                     Number of trees: 200
+No. of variables tried at each split: 3
+
+        OOB estimate of  error rate: 27.57%
+Confusion matrix:
+      0     1 class.error
+0 66008 30832   0.3183808
+1 24298 78862   0.2355370
+
+Call:
+ randomForest(formula = returnBin ~ ., data = d.train[1:num_obs,      m.vars2], ntree = f.trees, mtry = f.mtry) 
+               Type of random forest: classification
+                     Number of trees: 200
+No. of variables tried at each split: 3
+
+        OOB estimate of  error rate: 26.23%
+Confusion matrix:
+      0     1 class.error
+0 67773 29067   0.3001549
+1 23392 79768   0.2267546
+[1] "-------------------------------------------------------"
