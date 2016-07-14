@@ -158,3 +158,21 @@ abline(h=summary(returns$returns)[4], col="green")
 abline(h= summary(returns$returns)[4]+ 2*sd(returns$returns), col="red")
 abline(h= summary(returns$returns)[4]- 2*sd(returns$returns), col="red")
 
+#############################################################
+
+#Plot article returns per week for two articles:
+
+relevantCols<- c("return_per_articleID_week", "articleID", "week")
+temp<-df[, relevantCols]
+temp<- as.data.table(temp)
+
+low_ret <- "1134"
+high_ret<- "2045"
+    
+temp<- temp[temp$articleID==low_ret|temp$articleID==high_ret,]
+plot(temp$week, temp$return_per_articleID_week,
+     xlab="Week", ylab="Return per articleID",
+     col=ifelse(temp$articleID==low_ret, "red", "black"), pch=18)
+legend(6, 1, legend=c("a1134", "a2045"), col=c("red", "black"), pch=18)
+
+
