@@ -6,7 +6,7 @@ rm(list=ls())
 library("data.table")
 
 load("C:/Users/Nk/Documents/Uni/APA/data_2_10.RDa")
-source("C:/Users/Nk/Documents/Uni/APA/TimeMachine/clean_code_nk/pred_functions_updated.R")
+source("C:/Users/Nk/Documents/Uni/APA/TimeMachine/clean_code/functions/functions_pred_functions_updated.R")
 
 df$weekday<- weekdays(df$orderDate)
 class<-df[is.na(df$returnQuantity)]
@@ -49,7 +49,7 @@ sum(!unique(df$articleID) %in% unique(class$articleID))
 data    <- add_returns(df, class)
 df <- data$train
 class <- data$test
-df <- df[, !colnames(df) %in% "new"]
+#df <- df[, !colnames(df) %in% "new"]
 rm(data)
 
 
@@ -58,7 +58,10 @@ rm(data)
 relevantCols<- c("return_per_week", "week", "year")
 temp<-df[, relevantCols]
 temp<- temp[!duplicated(temp),]
-plot(temp$week, temp$return_per_week, col=ifelse(temp$year==2015, 1, 2))
+plot(temp$week, temp$return_per_week, col=ifelse(temp$year==2015, "red", "black"), 
+     xlab="Week", ylab="Return ratio", pch=18) 
+legend(0, 0.50, legend=c("2015", "2014"), col=c("red", "black"), pch=18)
+
 
 #T-test for difference:
 t.test(temp$return_per_week[temp$year==2015], temp$return_per_week[temp$year==2014])
@@ -67,7 +70,9 @@ t.test(temp$return_per_week[temp$year==2015], temp$return_per_week[temp$year==20
 relevantCols<- c("return_per_month", "month", "year")
 temp<-df[, relevantCols]
 temp<- temp[!duplicated(temp),]
-plot(temp$month, temp$return_per_month, col=ifelse(temp$year==2015, 1, 2))
+plot(temp$month, temp$return_per_month, col=ifelse(temp$year==2015, "red", "black"), pch=18)
+legend(0, 0.50, legend=c("2015", "2014"), col=c("red", "black"), pch=18)
+
 
 #T-test for difference:
 t.test(temp$return_per_month[temp$year==2015], temp$return_per_month[temp$year==2014])
@@ -105,13 +110,16 @@ View(temp) #seems to be no huge difference
 # See which products are present for labeled and unlabeled data for the same period:
 # Look for common products:
 relevantCols<- c("articleID", "week")
-temp<- df[unique(class$articleID) %in% unique(df$articleID),relevantCols]
+temp<- df[unique(df$articleID) %in% unique(class$articleID),relevantCols]
 length(unique(temp$articleID))
 
 temp<-temp[temp$week>=40,]
 
 temp<-data.table(temp[!duplicated(temp),])
-table(temp$week)
+week.table<- table(temp$week)
+library(xtable)
+xtable(week.table)
+
 
 #Check which products where present for the whole period
 temp<-temp[,.(number_of_weeks_present=.N), by=.(articleID)]
