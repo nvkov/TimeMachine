@@ -1,4 +1,4 @@
-#Compare data partitioning
+#Survival analysis
 #Prepare console:
 rm(list=ls())
 
